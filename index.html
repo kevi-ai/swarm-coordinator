@@ -15,395 +15,207 @@
       --neon-purple: #bf00ff;
       --dark: #0a0a0f;
       --darker: #050508;
-      --grid: rgba(0, 255, 242, 0.03);
     }
-    
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
     body {
       font-family: 'JetBrains Mono', monospace;
       background: var(--darker);
       color: #fff;
       min-height: 100vh;
-      overflow-x: hidden;
     }
-
-    /* Animated grid background */
     .cyber-grid {
       position: fixed;
       inset: 0;
       background: 
-        linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 50px 50px,
-        linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 50px 50px;
+        linear-gradient(90deg, rgba(0,255,242,0.03) 1px, transparent 1px) 0 0 / 50px 50px,
+        linear-gradient(rgba(0,255,242,0.03) 1px, transparent 1px) 0 0 / 50px 50px;
       animation: gridMove 20s linear infinite;
       z-index: -2;
     }
-    @keyframes gridMove {
-      to { transform: translateY(50px); }
-    }
-
-    /* Glowing orbs */
+    @keyframes gridMove { to { transform: translateY(50px); } }
     .orb {
       position: fixed;
       border-radius: 50%;
       filter: blur(80px);
       opacity: 0.4;
       z-index: -1;
-      animation: float 8s ease-in-out infinite;
     }
     .orb-1 { width: 400px; height: 400px; background: var(--neon-cyan); top: -100px; left: -100px; }
-    .orb-2 { width: 300px; height: 300px; background: var(--neon-pink); bottom: -50px; right: -50px; animation-delay: -4s; }
-    .orb-3 { width: 200px; height: 200px; background: var(--neon-purple); top: 50%; left: 50%; animation-delay: -2s; }
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(30px, -30px) scale(1.1); }
-    }
-
-    .container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
-
-    /* Header */
-    header {
-      text-align: center;
-      padding: 3rem 0;
-      position: relative;
-    }
-    .glitch-wrapper { position: relative; display: inline-block; }
+    .orb-2 { width: 300px; height: 300px; background: var(--neon-pink); bottom: -50px; right: -50px; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    header { text-align: center; padding: 2rem 0; }
     h1 {
       font-family: 'Orbitron', sans-serif;
-      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-size: clamp(2rem, 6vw, 4rem);
       font-weight: 900;
-      text-transform: uppercase;
       letter-spacing: 0.2em;
       background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      position: relative;
-      animation: glitch 3s infinite;
     }
-    @keyframes glitch {
-      0%, 90%, 100% { transform: translate(0); }
-      92% { transform: translate(-2px, 2px); }
-      94% { transform: translate(2px, -2px); }
-      96% { transform: translate(-2px, -2px); }
-      98% { transform: translate(2px, 2px); }
+    .tagline { font-size: 0.85rem; color: var(--neon-cyan); letter-spacing: 0.3em; text-transform: uppercase; margin-top: 0.5rem; opacity: 0.7; }
+    
+    /* Config Panel */
+    .config-panel {
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(0,255,242,0.3);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
     }
-    h1::before, h1::after {
-      content: 'SWARM';
-      position: absolute;
-      left: 0;
-      top: 0;
-      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    h1::before { animation: glitchTop 3s infinite; clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%); }
-    h1::after { animation: glitchBottom 3s infinite; clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%); }
-    @keyframes glitchTop {
-      0%, 90%, 100% { transform: translate(0); opacity: 1; }
-      92%, 96% { transform: translate(3px, 0); opacity: 0.8; }
-    }
-    @keyframes glitchBottom {
-      0%, 90%, 100% { transform: translate(0); opacity: 1; }
-      94%, 98% { transform: translate(-3px, 0); opacity: 0.8; }
-    }
-    .tagline {
-      font-size: 0.9rem;
+    .config-panel h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
       color: var(--neon-cyan);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      margin-top: 1rem;
-      opacity: 0.8;
+      margin-bottom: 1rem;
     }
-
-    /* Status bar */
+    .config-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .config-row label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .config-row input, .config-row select {
+      padding: 0.75rem;
+      background: rgba(0,255,242,0.1);
+      border: 1px solid rgba(0,255,242,0.3);
+      color: var(--neon-cyan);
+      font-family: inherit;
+      font-size: 0.9rem;
+      min-width: 200px;
+    }
+    .config-row input:focus, .config-row select:focus {
+      outline: none;
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 20px rgba(0,255,242,0.2);
+    }
+    
+    /* Status Bar */
     .status-bar {
       display: flex;
       justify-content: center;
-      gap: 3rem;
-      padding: 1.5rem;
-      margin: 2rem 0;
-      border: 1px solid rgba(0, 255, 242, 0.2);
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      position: relative;
-    }
-    .status-bar::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink), var(--neon-cyan));
-      z-index: -1;
-      opacity: 0.5;
-      animation: borderGlow 3s linear infinite;
-    }
-    @keyframes borderGlow {
-      0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.7; }
+      gap: 2rem;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(0,255,242,0.2);
+      background: rgba(0,0,0,0.5);
     }
     .status-item { text-align: center; }
     .status-value {
       font-family: 'Orbitron', sans-serif;
-      font-size: 2rem;
+      font-size: 1.5rem;
       font-weight: 700;
       color: var(--neon-green);
-      text-shadow: 0 0 20px var(--neon-green);
     }
-    .status-label {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.5);
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-    }
-
-    /* Main grid layout */
+    .status-label { font-size: 0.65rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; }
+    .status-value.error { color: var(--neon-pink); }
+    
+    /* Main Grid */
     .main-grid {
       display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 2rem;
-      margin-top: 2rem;
+      grid-template-columns: 300px 1fr;
+      gap: 1.5rem;
     }
-    @media (max-width: 1000px) { .main-grid { grid-template-columns: 1fr; } }
-
-    /* Cyber panel */
+    @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+    
+    /* Panel */
     .panel {
-      background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(20,20,30,0.8));
-      border: 1px solid rgba(0, 255, 242, 0.3);
-      padding: 1.5rem;
-      position: relative;
-      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-    }
-    .panel::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 3px;
-      background: linear-gradient(90deg, var(--neon-cyan), transparent);
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(0,255,242,0.3);
+      padding: 1.25rem;
     }
     .panel-title {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: var(--neon-cyan);
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .panel-title::before {
-      content: '//';
-      color: var(--neon-pink);
-    }
-
-    /* Agents list */
-    .agent-card {
-      background: rgba(0, 255, 242, 0.05);
-      border-left: 3px solid var(--neon-cyan);
-      padding: 1rem;
       margin-bottom: 1rem;
+    }
+    .panel-title::before { content: '// '; color: var(--neon-pink); }
+    
+    /* Agents */
+    .agent-card {
+      background: rgba(0,255,242,0.05);
+      border-left: 3px solid var(--neon-cyan);
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
       transition: all 0.3s;
-      cursor: pointer;
     }
-    .agent-card:hover {
-      background: rgba(0, 255, 242, 0.1);
-      transform: translateX(5px);
-      box-shadow: 0 0 30px rgba(0, 255, 242, 0.2);
-    }
-    .agent-card.active {
-      border-color: var(--neon-pink);
-      background: rgba(255, 0, 170, 0.1);
-    }
-    .agent-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    .agent-name {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
-      color: var(--neon-cyan);
-    }
+    .agent-card.busy { border-color: var(--neon-yellow); background: rgba(240,255,0,0.05); }
+    .agent-card.working { border-color: var(--neon-green); background: rgba(0,255,136,0.1); animation: pulse 1s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+    .agent-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .agent-name { font-family: 'Orbitron', sans-serif; font-size: 0.85rem; color: var(--neon-cyan); }
     .agent-status {
-      font-size: 0.7rem;
-      padding: 0.25rem 0.75rem;
-      border-radius: 2px;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
     }
     .agent-status.online { background: var(--neon-green); color: #000; }
     .agent-status.busy { background: var(--neon-yellow); color: #000; }
-    .agent-status.offline { background: rgba(255,255,255,0.2); }
-    .agent-skills {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .skill-tag {
-      font-size: 0.65rem;
-      padding: 0.2rem 0.5rem;
-      background: rgba(191, 0, 255, 0.3);
-      border: 1px solid var(--neon-purple);
-      color: var(--neon-purple);
-    }
-
-    /* Task flow visualization */
-    .task-flow {
-      min-height: 400px;
-      position: relative;
-      overflow: hidden;
-    }
-    .flow-node {
-      position: absolute;
-      background: rgba(0,0,0,0.8);
-      border: 2px solid var(--neon-cyan);
-      padding: 1rem 1.5rem;
-      min-width: 180px;
-      text-align: center;
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .flow-node::before {
-      content: '';
-      position: absolute;
-      inset: -5px;
-      background: var(--neon-cyan);
-      opacity: 0.1;
-      z-index: -1;
-      animation: nodePulse 2s infinite;
-    }
-    @keyframes nodePulse {
-      0%, 100% { opacity: 0.1; transform: scale(1); }
-      50% { opacity: 0.2; transform: scale(1.02); }
-    }
-    .flow-node.main { 
-      border-color: var(--neon-pink); 
-      top: 50%; left: 50%; 
-      transform: translate(-50%, -50%);
-    }
-    .flow-node.main::before { background: var(--neon-pink); }
-    .flow-node.sub-1 { border-color: var(--neon-green); top: 10%; left: 10%; }
-    .flow-node.sub-2 { border-color: var(--neon-yellow); top: 10%; right: 10%; }
-    .flow-node.sub-3 { border-color: var(--neon-purple); bottom: 10%; left: 10%; }
-    .flow-node.sub-4 { border-color: var(--neon-cyan); bottom: 10%; right: 10%; }
-    .node-title {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      margin-bottom: 0.25rem;
-    }
-    .node-status { font-size: 0.65rem; opacity: 0.7; }
-    .node-progress {
-      height: 3px;
-      background: rgba(255,255,255,0.1);
-      margin-top: 0.5rem;
-      overflow: hidden;
-    }
-    .node-progress-fill {
-      height: 100%;
-      background: var(--neon-green);
-      animation: progress 3s ease-in-out infinite;
-    }
-    @keyframes progress {
-      0% { width: 0%; }
-      50% { width: 100%; }
-      100% { width: 0%; }
-    }
-
-    /* Connection lines (SVG) */
-    .connections {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .connection-line {
-      stroke: var(--neon-cyan);
-      stroke-width: 1;
-      fill: none;
-      stroke-dasharray: 5,5;
-      animation: dash 1s linear infinite;
-      opacity: 0.5;
-    }
-    @keyframes dash { to { stroke-dashoffset: -10; } }
-
-    /* Input section */
-    .input-section {
-      margin-top: 2rem;
-    }
-    .cyber-input {
-      width: 100%;
+    .agent-task { font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
+    .skill-tags { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+    .skill-tag { font-size: 0.6rem; padding: 0.15rem 0.4rem; background: rgba(191,0,255,0.3); border: 1px solid var(--neon-purple); }
+    
+    /* Jobs List */
+    .job-item {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(0,255,242,0.2);
       padding: 1rem;
-      background: rgba(0,0,0,0.5);
-      border: 1px solid var(--neon-cyan);
-      color: var(--neon-cyan);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      outline: none;
-      transition: all 0.3s;
+      margin-bottom: 0.75rem;
     }
-    .cyber-input:focus {
-      box-shadow: 0 0 30px rgba(0, 255, 242, 0.3), inset 0 0 30px rgba(0, 255, 242, 0.1);
-    }
-    .cyber-input::placeholder { color: rgba(0, 255, 242, 0.3); }
+    .job-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+    .job-id { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: var(--neon-pink); }
+    .job-status { font-size: 0.7rem; padding: 0.2rem 0.5rem; }
+    .job-status.running { background: var(--neon-yellow); color: #000; }
+    .job-status.completed { background: var(--neon-green); color: #000; }
+    .job-bounty { font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .job-tasks { font-size: 0.75rem; color: rgba(255,255,255,0.6); }
+    
+    /* Buttons */
     .cyber-btn {
       width: 100%;
-      margin-top: 1rem;
       padding: 1rem;
       background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
       border: none;
       color: #000;
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.1em;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
+      margin-top: 1rem;
       transition: all 0.3s;
     }
-    .cyber-btn:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 40px rgba(0, 255, 242, 0.5);
-    }
-    .cyber-btn::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      animation: shine 2s infinite;
-    }
-    @keyframes shine { to { left: 100%; } }
-
-    /* Log console */
+    .cyber-btn:hover { transform: scale(1.02); box-shadow: 0 0 30px rgba(0,255,242,0.4); }
+    .cyber-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .cyber-btn.secondary { background: rgba(0,255,242,0.2); color: var(--neon-cyan); border: 1px solid var(--neon-cyan); }
+    
+    /* Console */
     .console {
       background: rgba(0,0,0,0.8);
-      border: 1px solid rgba(0, 255, 242, 0.2);
+      border: 1px solid rgba(0,255,242,0.2);
       padding: 1rem;
-      margin-top: 2rem;
-      max-height: 200px;
+      margin-top: 1.5rem;
+      max-height: 250px;
       overflow-y: auto;
       font-size: 0.75rem;
     }
-    .console-line {
-      padding: 0.25rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      display: flex;
-      gap: 1rem;
-    }
-    .console-time { color: rgba(255,255,255,0.3); }
-    .console-type { width: 60px; }
+    .console-line { padding: 0.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; gap: 0.75rem; }
+    .console-time { color: rgba(255,255,255,0.3); min-width: 70px; }
+    .console-type { min-width: 50px; }
     .console-type.info { color: var(--neon-cyan); }
     .console-type.success { color: var(--neon-green); }
     .console-type.warn { color: var(--neon-yellow); }
+    .console-type.error { color: var(--neon-pink); }
     .console-msg { color: rgba(255,255,255,0.7); }
-
-    footer {
-      text-align: center;
-      padding: 3rem 0;
-      color: rgba(255,255,255,0.3);
-      font-size: 0.75rem;
-    }
+    
+    footer { text-align: center; padding: 2rem; color: rgba(255,255,255,0.3); font-size: 0.75rem; }
     footer a { color: var(--neon-cyan); text-decoration: none; }
   </style>
 </head>
@@ -411,241 +223,242 @@
   <div class="cyber-grid"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
 
   <div class="container">
     <header>
-      <div class="glitch-wrapper">
-        <h1>SWARM</h1>
-      </div>
+      <h1>SWARM</h1>
       <p class="tagline">Agent Coordination Protocol v1.0</p>
     </header>
 
+    <div class="config-panel">
+      <h2>// API Configuration</h2>
+      <div class="config-row">
+        <div>
+          <label>Backend URL</label>
+          <input type="text" id="apiUrl" value="http://localhost:3000" placeholder="http://localhost:3000">
+        </div>
+        <div>
+          <label>Bounty ID</label>
+          <input type="text" id="bountyId" placeholder="Enter bounty ID (e.g. 55)">
+        </div>
+        <div style="display: flex; align-items: flex-end;">
+          <button class="cyber-btn" onclick="coordinate()" id="coordBtn">⚡ Coordinate</button>
+        </div>
+      </div>
+      <p style="font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 0.5rem;">
+        Run <code style="color: var(--neon-cyan);">npm start</code> in the project folder to start the backend API
+      </p>
+    </div>
+
     <div class="status-bar">
       <div class="status-item">
-        <div class="status-value" id="agentCount">4</div>
-        <div class="status-label">Agents Online</div>
+        <div class="status-value" id="statusAgents">--</div>
+        <div class="status-label">Agents</div>
       </div>
       <div class="status-item">
-        <div class="status-value" id="taskCount">12</div>
-        <div class="status-label">Tasks Active</div>
+        <div class="status-value" id="statusJobs">--</div>
+        <div class="status-label">Jobs</div>
       </div>
       <div class="status-item">
-        <div class="status-value" id="successRate">94%</div>
-        <div class="status-label">Success Rate</div>
-      </div>
-      <div class="status-item">
-        <div class="status-value" id="totalEarned">$847</div>
-        <div class="status-label">Total Earned</div>
+        <div class="status-value" id="statusApi">--</div>
+        <div class="status-label">API Status</div>
       </div>
     </div>
 
     <div class="main-grid">
       <div class="panel">
         <h2 class="panel-title">Agent Registry</h2>
-        
-        <div class="agent-card active">
-          <div class="agent-header">
-            <span class="agent-name">🤖 ALPHA-01</span>
-            <span class="agent-status online">Online</span>
-          </div>
-          <div class="agent-skills">
-            <span class="skill-tag">frontend</span>
-            <span class="skill-tag">typescript</span>
-            <span class="skill-tag">react</span>
-          </div>
+        <div id="agentsList">
+          <p style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">Connect to API to load agents...</p>
         </div>
-
-        <div class="agent-card">
-          <div class="agent-header">
-            <span class="agent-name">🤖 BETA-02</span>
-            <span class="agent-status busy">Busy</span>
-          </div>
-          <div class="agent-skills">
-            <span class="skill-tag">backend</span>
-            <span class="skill-tag">python</span>
-            <span class="skill-tag">api</span>
-          </div>
-        </div>
-
-        <div class="agent-card">
-          <div class="agent-header">
-            <span class="agent-name">🤖 GAMMA-03</span>
-            <span class="agent-status online">Online</span>
-          </div>
-          <div class="agent-skills">
-            <span class="skill-tag">blockchain</span>
-            <span class="skill-tag">solidity</span>
-          </div>
-        </div>
-
-        <div class="agent-card">
-          <div class="agent-header">
-            <span class="agent-name">🤖 DELTA-04</span>
-            <span class="agent-status online">Online</span>
-          </div>
-          <div class="agent-skills">
-            <span class="skill-tag">design</span>
-            <span class="skill-tag">content</span>
-          </div>
-        </div>
-
-        <div class="input-section">
-          <input type="text" class="cyber-input" id="bountyInput" placeholder="Enter Bounty ID or paste URL...">
-          <button class="cyber-btn" onclick="decomposeBounty()">⚡ Decompose & Assign</button>
-        </div>
+        <button class="cyber-btn secondary" onclick="refreshAgents()">↻ Refresh Agents</button>
       </div>
 
       <div class="panel">
-        <h2 class="panel-title">Task Orchestration</h2>
-        
-        <div class="task-flow">
-          <svg class="connections" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <path class="connection-line" d="M50,50 L15,15" />
-            <path class="connection-line" d="M50,50 L85,15" />
-            <path class="connection-line" d="M50,50 L15,85" />
-            <path class="connection-line" d="M50,50 L85,85" />
-          </svg>
-          
-          <div class="flow-node main">
-            <div class="node-title" style="color: var(--neon-pink);">Coordinator</div>
-            <div class="node-status">Orchestrating...</div>
-            <div class="node-progress"><div class="node-progress-fill"></div></div>
-          </div>
-          
-          <div class="flow-node sub-1">
-            <div class="node-title" style="color: var(--neon-green);">UI/Frontend</div>
-            <div class="node-status">ALPHA-01 assigned</div>
-            <div class="node-progress"><div class="node-progress-fill" style="animation-delay: -0.5s;"></div></div>
-          </div>
-          
-          <div class="flow-node sub-2">
-            <div class="node-title" style="color: var(--neon-yellow);">API/Backend</div>
-            <div class="node-status">BETA-02 assigned</div>
-            <div class="node-progress"><div class="node-progress-fill" style="animation-delay: -1s;"></div></div>
-          </div>
-          
-          <div class="flow-node sub-3">
-            <div class="node-title" style="color: var(--neon-purple);">Smart Contract</div>
-            <div class="node-status">GAMMA-03 assigned</div>
-            <div class="node-progress"><div class="node-progress-fill" style="animation-delay: -1.5s;"></div></div>
-          </div>
-          
-          <div class="flow-node sub-4">
-            <div class="node-title" style="color: var(--neon-cyan);">Documentation</div>
-            <div class="node-status">DELTA-04 assigned</div>
-            <div class="node-progress"><div class="node-progress-fill" style="animation-delay: -2s;"></div></div>
-          </div>
+        <h2 class="panel-title">Active Jobs</h2>
+        <div id="jobsList">
+          <p style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">No active jobs. Enter a bounty ID and click Coordinate.</p>
         </div>
       </div>
     </div>
 
-    <div class="panel" style="margin-top: 2rem;">
-      <h2 class="panel-title">System Console</h2>
-      <div class="console" id="console">
-        <div class="console-line">
-          <span class="console-time">04:45:23</span>
-          <span class="console-type info">[INFO]</span>
-          <span class="console-msg">SWARM coordinator initialized</span>
-        </div>
-        <div class="console-line">
-          <span class="console-time">04:45:24</span>
-          <span class="console-type success">[OK]</span>
-          <span class="console-msg">Connected to bounty.owockibot.xyz</span>
-        </div>
-        <div class="console-line">
-          <span class="console-time">04:45:25</span>
-          <span class="console-type info">[INFO]</span>
-          <span class="console-msg">4 agents registered and ready</span>
-        </div>
-        <div class="console-line">
-          <span class="console-time">04:45:26</span>
-          <span class="console-type warn">[WAIT]</span>
-          <span class="console-msg">Awaiting bounty assignment...</span>
-        </div>
-      </div>
-    </div>
+    <div class="console" id="console"></div>
 
     <footer>
       <p>Built by <a href="https://github.com/kevi-ai">kevi-ai</a> for <a href="https://bounty.owockibot.xyz">AI Bounty Board</a></p>
-      <p style="margin-top: 0.5rem;">// SWARM Protocol v1.0 // Agent Coordination Layer //</p>
     </footer>
   </div>
 
   <script>
-    const API = 'https://bounty.owockibot.xyz';
-
+    // Logging
     function log(type, msg) {
       const console = document.getElementById('console');
       const time = new Date().toTimeString().slice(0, 8);
-      console.innerHTML += `
-        <div class="console-line">
-          <span class="console-time">${time}</span>
-          <span class="console-type ${type}">[${type.toUpperCase()}]</span>
-          <span class="console-msg">${msg}</span>
-        </div>
-      `;
+      console.innerHTML += `<div class="console-line"><span class="console-time">${time}</span><span class="console-type ${type}">[${type.toUpperCase()}]</span><span class="console-msg">${msg}</span></div>`;
       console.scrollTop = console.scrollHeight;
     }
 
-    async function decomposeBounty() {
-      const input = document.getElementById('bountyInput').value.trim();
-      if (!input) {
-        log('warn', 'No bounty ID provided');
-        return;
-      }
+    function getApiUrl() {
+      return document.getElementById('apiUrl').value.trim() || 'http://localhost:3000';
+    }
 
-      const id = input.match(/\d+/)?.[0] || input;
-      log('info', `Fetching bounty #${id}...`);
-
+    // Check API status
+    async function checkStatus() {
       try {
-        const res = await fetch(API + '/bounties');
-        const bounties = await res.json();
-        const bounty = bounties.find(b => b.id === id);
-
-        if (!bounty) {
-          log('warn', `Bounty #${id} not found`);
-          return;
-        }
-
-        log('success', `Found: "${bounty.title}"`);
-        log('info', `Reward: $${(parseFloat(bounty.reward) / 1e6).toFixed(0)} USDC`);
-        log('info', 'Analyzing task requirements...');
-
-        setTimeout(() => {
-          log('info', 'Decomposing into subtasks...');
-          
-          const subtasks = [
-            { name: 'UI/Frontend', agent: 'ALPHA-01', skills: ['frontend', 'react', 'css'] },
-            { name: 'API/Backend', agent: 'BETA-02', skills: ['backend', 'api', 'node'] },
-            { name: 'Integration', agent: 'GAMMA-03', skills: ['web3', 'integration'] },
-            { name: 'Docs/Testing', agent: 'DELTA-04', skills: ['docs', 'testing'] }
-          ];
-
-          subtasks.forEach((task, i) => {
-            setTimeout(() => {
-              log('success', `Subtask "${task.name}" assigned to ${task.agent}`);
-            }, (i + 1) * 500);
-          });
-
-          setTimeout(() => {
-            log('success', 'All subtasks assigned! Coordination active.');
-            log('info', 'Agents working in parallel...');
-          }, subtasks.length * 500 + 500);
-        }, 1000);
-
+        const res = await fetch(getApiUrl() + '/api/status');
+        const data = await res.json();
+        document.getElementById('statusAgents').textContent = data.agents || 0;
+        document.getElementById('statusJobs').textContent = data.jobs || 0;
+        document.getElementById('statusApi').textContent = '✓ Online';
+        document.getElementById('statusApi').classList.remove('error');
+        log('success', 'Connected to SWARM API');
+        return true;
       } catch (err) {
-        log('warn', 'Error: ' + err.message);
+        document.getElementById('statusApi').textContent = '✗ Offline';
+        document.getElementById('statusApi').classList.add('error');
+        log('error', 'API not reachable. Start backend with: npm start');
+        return false;
       }
     }
 
-    // Handle enter key
-    document.getElementById('bountyInput').addEventListener('keypress', e => {
-      if (e.key === 'Enter') decomposeBounty();
+    // Load agents
+    async function refreshAgents() {
+      try {
+        const res = await fetch(getApiUrl() + '/api/agents');
+        const data = await res.json();
+        
+        const container = document.getElementById('agentsList');
+        container.innerHTML = data.agents.map(a => `
+          <div class="agent-card ${a.status}">
+            <div class="agent-header">
+              <span class="agent-name">🤖 ${a.name}</span>
+              <span class="agent-status ${a.status}">${a.status}</span>
+            </div>
+            <div class="skill-tags">
+              ${a.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+            </div>
+            ${a.currentTask ? `<div class="agent-task">Working on task #${a.currentTask}</div>` : ''}
+          </div>
+        `).join('');
+        
+        log('info', `Loaded ${data.agents.length} agents`);
+      } catch (err) {
+        log('error', 'Failed to load agents: ' + err.message);
+      }
+    }
+
+    // Load jobs
+    async function refreshJobs() {
+      try {
+        const res = await fetch(getApiUrl() + '/api/jobs');
+        const data = await res.json();
+        
+        const container = document.getElementById('jobsList');
+        if (data.jobs.length === 0) {
+          container.innerHTML = '<p style="color: rgba(255,255,255,0.4); font-size: 0.8rem;">No active jobs.</p>';
+          return;
+        }
+        
+        container.innerHTML = data.jobs.map(j => `
+          <div class="job-item">
+            <div class="job-header">
+              <span class="job-id">${j.id}</span>
+              <span class="job-status ${j.status}">${j.status}</span>
+            </div>
+            <div class="job-bounty">Bounty #${j.bountyId}</div>
+            <div class="job-tasks">
+              ${j.subtasks.map(t => `• ${t.name} → ${t.assignedTo || 'unassigned'} [${t.status}]`).join('<br>')}
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        log('error', 'Failed to load jobs: ' + err.message);
+      }
+    }
+
+    // Coordinate bounty
+    async function coordinate() {
+      const bountyId = document.getElementById('bountyId').value.trim();
+      if (!bountyId) {
+        log('warn', 'Please enter a bounty ID');
+        return;
+      }
+
+      const btn = document.getElementById('coordBtn');
+      btn.disabled = true;
+      btn.textContent = '⏳ Processing...';
+
+      log('info', `Coordinating bounty #${bountyId}...`);
+
+      try {
+        const res = await fetch(getApiUrl() + '/api/coordinate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ bountyId })
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+          log('error', data.error);
+          return;
+        }
+
+        log('success', `Bounty: "${data.bounty.title}" ($${data.bounty.reward || '?'})`);
+        log('info', `Created job: ${data.jobId}`);
+        
+        for (const a of data.assignments) {
+          log('success', `Assigned "${a.taskName}" → ${a.agentId}`);
+        }
+
+        log('success', `Coordination complete! ${data.assignments.length} tasks assigned.`);
+
+        // Refresh UI
+        await refreshAgents();
+        await refreshJobs();
+        await checkStatus();
+
+      } catch (err) {
+        log('error', 'Coordination failed: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '⚡ Coordinate';
+      }
+    }
+
+    // Complete a task (for demo)
+    async function completeTask(jobId, taskId) {
+      try {
+        const res = await fetch(getApiUrl() + '/api/complete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ jobId, taskId })
+        });
+        const data = await res.json();
+        log('success', `Task #${taskId} completed! Job status: ${data.jobStatus}`);
+        await refreshAgents();
+        await refreshJobs();
+      } catch (err) {
+        log('error', err.message);
+      }
+    }
+
+    // Init
+    log('info', 'SWARM UI initialized');
+    log('info', 'Checking API connection...');
+    checkStatus().then(ok => {
+      if (ok) {
+        refreshAgents();
+        refreshJobs();
+      }
     });
 
-    // Initial animation
-    setTimeout(() => log('info', 'Ready for bounty coordination'), 1000);
+    // Auto-refresh every 10s
+    setInterval(() => {
+      checkStatus();
+      refreshAgents();
+      refreshJobs();
+    }, 10000);
   </script>
 </body>
 </html>
