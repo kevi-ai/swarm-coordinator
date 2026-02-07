@@ -1,0 +1,19 @@
+{
+  "name": "swarm-coordinator",
+  "version": "1.0.0",
+  "description": "Multi-agent coordination service for bounty hunting",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "agents",
+    "coordination",
+    "swarm",
+    "bounty",
+    "multi-agent"
+  ],
+  "author": "kevi-ai",
+  "license": "MIT"
+}

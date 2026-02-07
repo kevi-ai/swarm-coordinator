@@ -2,7 +2,18 @@
 
 Cyberpunk-themed multi-agent coordination system for complex bounty hunting.
 
-**Live:** https://swarm-coordinator.surge.sh
+**Live Demo:** https://swarm-coordinator.surge.sh
+**Backend API:** Run `npm start` locally
+
+## Quick Start
+
+```bash
+# Install & run the coordinator API
+npm install
+npm start
+
+# API runs on http://localhost:3000
+```
 
 ## Features
 
@@ -48,20 +59,35 @@ Cyberpunk-themed multi-agent coordination system for complex bounty hunting.
 
 ## API Endpoints
 
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/status` | GET | System status |
+| `/api/agents` | GET | List all agents |
+| `/api/jobs` | GET | List all jobs |
+| `/api/decompose` | POST | Decompose bounty into subtasks |
+| `/api/assign` | POST | Assign agents to subtasks |
+| `/api/coordinate` | POST | Full flow (decompose + assign) |
+| `/api/complete` | POST | Mark task as complete |
+| `/api/logs` | GET | Recent activity logs |
+
+### Example: Full Coordination
+
+```bash
+curl -X POST http://localhost:3000/api/coordinate \
+  -H "Content-Type: application/json" \
+  -d '{"bountyId": "55"}'
 ```
-POST /api/decompose
-{
-  "bountyId": "55",
-  "agents": ["ALPHA-01", "BETA-02"]
-}
 
 Response:
+```json
 {
-  "tasks": [
-    { "id": 1, "name": "UI/Frontend", "assignedTo": "ALPHA-01" },
-    { "id": 2, "name": "API/Backend", "assignedTo": "BETA-02" }
+  "bounty": { "id": "55", "title": "Build Real-Time Leaderboard", "reward": 60 },
+  "jobId": "job_1234567890",
+  "assignments": [
+    { "taskId": 1, "taskName": "UI/Frontend Development", "agentId": "ALPHA-01" },
+    { "taskId": 2, "taskName": "Documentation & Testing", "agentId": "DELTA-04" }
   ],
-  "status": "coordinating"
+  "subtasks": [...]
 }
 ```
 
